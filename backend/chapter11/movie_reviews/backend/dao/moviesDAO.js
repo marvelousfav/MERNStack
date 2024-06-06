@@ -1,6 +1,6 @@
-import mongodb from "mongodb"
+import mongodb from "mongodb";
 const ObjectId = mongodb.ObjectId;
-let movies
+let movies;
 export default class MoviesDAO {
     static async injectDB(conn) {
         if (movies) {
