@@ -19,7 +19,7 @@ function App() {
               <Link to={"/movies"}>Movies</Link>
             </Nav.Link>
             <Nav.Link>
-              {true ? (
+              {false ? (
                 <a>Logout User</a>
               ) : (
                 <Link to={"/login"}>Login</Link>
