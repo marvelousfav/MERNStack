@@ -1,10 +1,9 @@
 import React from 'react'
-
-function Movie() {
+function AddReview() {
     return (
         <div className="App">
-            Movie
+            Add Review
         </div>
     );
 }
-export default Movie;
+export default AddReview;
