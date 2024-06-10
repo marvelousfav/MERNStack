@@ -99,11 +99,7 @@ const MoviesList = props => {
                                     })}
                                 </Form.Control>
                             </Form.Group>
-                            <Button
-                                variant="primary"
-                                type="button"
-                                onClick={findByRating}
-                            >
+                            <Button variant="primary"type="button"onClick={findByRating}>
                                 Search
                             </Button>
                         </Col>

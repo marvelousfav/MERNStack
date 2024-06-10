@@ -15,26 +15,27 @@ const MoviesList = (props) => {
 
   const [currentPage, setCurrentPage] = useState(0)
   const [entriesPerPage, setEntriesPerPage] = useState(0)
-  const [currentSearchMode, setCurrentSearchMode] = useState("") 
-
-  useEffect(() =>{  
-    setCurrentPage(0) 
-    },[currentSearchMode])
+  const [currentSearchMode, setCurrentSearchMode] = useState("")
 
   useEffect(() => {
-    retrieveNextPage()     
-},[currentPage]) 
+    setCurrentPage(0)
+  }, [currentSearchMode])
 
-const retrieveNextPage = () => { 
-if(currentSearchMode === "findByTitle") 
-findByTitle() 
-else if(currentSearchMode === "findByRating") 
-findByRating()       
-else  
-retrieveMovies() 
-} 
+  useEffect(() => {
+    retrieveNextPage()
+  }, [currentPage])
+
+  const retrieveNextPage = () => {
+    if (currentSearchMode === "findByTitle")
+      findByTitle()
+    else if (currentSearchMode === "findByRating")
+      findByRating()
+    else
+      retrieveMovies()
+  }
 
   const retrieveMovies = () => {
+    setCurrentSearchMode("")
     MovieDataService.getAll(currentPage)
       .then((response) => {
         console.log(response.data);
@@ -76,9 +77,11 @@ retrieveMovies()
       });
   };
   const findByTitle = () => {
+    setCurrentSearchMode("findByTitle")
     find(searchTitle, "title");
   };
   const findByRating = () => {
+    setCurrentSearchMode("findByRating")
     if (searchRating === "All Ratings") {
       retrieveMovies();
     } else {
