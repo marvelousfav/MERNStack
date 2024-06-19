@@ -65,7 +65,6 @@ const MoviesList = props => {
         else {
             find(searchRating, "rated")
         }
-        106
     }
     return (
         <div className="App">
