@@ -1,28 +1,34 @@
-const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
+// Import necessary packages
 const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const schema = require('./schemas/blogSchema');
-const resolvers = require('./resolvers/blogResolvers');
+require('dotenv').config();
 
-dotenv.config();
+// Get the MongoDB URI from environment variables
+const mongoURI = process.env.MONGO_URI;
 
-const app = express();
-const port = process.env.PORT || 4000;
+// Ensure the URI is defined
+if (!mongoURI) {
+    console.error('MongoDB URI is not defined. Please set the MONGO_URI environment variable.');
+    process.exit(1);
+}
 
-app.use(cors());
-app.use(express.json());
-
-app.use(
-    '/graphql',
-    graphqlHTTP({
-        schema,
-        rootValue: resolvers,
-        graphiql: true,
+// Connect to MongoDB using Mongoose
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('MongoDB connected successfully');
     })
-);
+    .catch(err => {
+        console.error('Error connecting to MongoDB:', err);
+    });
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(port, () => console.log(`Server running on port ${port}`)))
-    .catch(err => console.error(err));
+// Your existing code to start the server
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
