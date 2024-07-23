@@ -1,6 +1,4 @@
-require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const { graphqlHTTP } = require('express-graphql');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const bookSchema = require('./schemas/bookSchema');
@@ -31,6 +29,3 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true
 }));
 
-app.listen(4000, () => {
-  console.log('Server is running on port 4000');
-});
