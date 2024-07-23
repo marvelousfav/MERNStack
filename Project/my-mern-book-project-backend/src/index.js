@@ -8,10 +8,7 @@ const userSchema = require('./schemas/userSchema');
 const bookResolvers = require('./resolvers/bookResolvers');
 const userResolvers = require('./resolvers/userResolvers');
 
-dotenv.config();
-
 const app = express();
-const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
