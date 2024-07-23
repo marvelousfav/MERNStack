@@ -1,9 +1,3 @@
-require('dotenv').config();
-const uri = process.env.MONGO_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.error('MongoDB Connection Error:', err));
-
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const mongoose = require('mongoose');
@@ -18,8 +12,10 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;
+
 app.use(cors());
 app.use(express.json());
+
 app.use(
     '/graphql-books',
     graphqlHTTP({
@@ -28,6 +24,7 @@ app.use(
         graphiql: true,
     })
 );
+
 app.use(
     '/graphql-users',
     graphqlHTTP({
@@ -36,6 +33,8 @@ app.use(
         graphiql: true,
     })
 );
+
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => app.listen(port, () => console.log(`Server running on port ${port}`)))
     .catch(err => console.error(err));
+
