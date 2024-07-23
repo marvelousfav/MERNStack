@@ -1,8 +1,8 @@
+require('dotenv').config();
 const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
 const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
+const { graphqlHTTP } = require('express-graphql');
+const { makeExecutableSchema } = require('@graphql-tools/schema');
 const bookSchema = require('./schemas/bookSchema');
 const userSchema = require('./schemas/userSchema');
 const bookResolvers = require('./resolvers/bookResolvers');
@@ -10,28 +10,27 @@ const userResolvers = require('./resolvers/userResolvers');
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+// MongoDB Connection
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Connected to MongoDB');
+}).catch(err => {
+    console.error('Failed to connect to MongoDB', err);
+});
 
-app.use(
-    '/graphql-books',
-    graphqlHTTP({
-        schema: bookSchema,
-        rootValue: bookResolvers,
-        graphiql: true,
-    })
-);
+// Schema and Resolvers
+const schema = makeExecutableSchema({
+    typeDefs: [bookSchema, userSchema],
+    resolvers: [bookResolvers, userResolvers]
+});
 
-app.use(
-    '/graphql-users',
-    graphqlHTTP({
-        schema: userSchema,
-        rootValue: userResolvers,
-        graphiql: true,
-    })
-);
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    graphiql: true
+}));
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(port, () => console.log(`Server running on port ${port}`)))
-    .catch(err => console.error(err));
-
+app.listen(4000, () => {
+    console.log('Server is running on port 4000');
+});
