@@ -1,12 +1,13 @@
-const { buildSchema } = require('graphql');
+//bookSchema.js
 
-const schema = buildSchema(`
+const { gql } = require('apollo-server-express');
+
+const bookSchema = gql`
   type Book {
     id: ID!
     title: String!
     author: String!
-    description: String!
-    publishedYear: Int!
+    publishedDate: String
   }
 
   type Query {
@@ -15,10 +16,10 @@ const schema = buildSchema(`
   }
 
   type Mutation {
-    createBook(title: String!, author: String!, description: String!, publishedYear: Int!): Book
-    updateBook(id: ID!, title: String, author: String, description: String, publishedYear: Int): Book
+    addBook(title: String!, author: String!, publishedDate: String): Book
     deleteBook(id: ID!): Book
   }
-`);
+`;
 
-module.exports = schema;
+module.exports = bookSchema;
+
