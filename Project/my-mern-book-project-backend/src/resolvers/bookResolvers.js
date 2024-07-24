@@ -1,24 +1,31 @@
-const Book = require('../models/Book'); // Assuming you have a Book model
-
-const bookResolvers = {
+const books = [
+    {
+      id: '1',
+      title: 'Harry Potter and the Sorcerer\'s Stone',
+      author: 'J.K. Rowling',
+      description: 'A young boy discovers he is a wizard and attends a magical school.'  // Example description
+    },
+    // Add more books as needed
+  ];
+  
+  const resolvers = {
     Query: {
-        books: async () => {
-            return await Book.find();
-        },
-        book: async (parent, args) => {
-            return await Book.findById(args.id);
-        }
+      books: () => books,
     },
     Mutation: {
-        addBook: async (parent, args) => {
-            const newBook = new Book(args);
-            return await newBook.save();
-        },
-        deleteBook: async (parent, args) => {
-            return await Book.findByIdAndDelete(args.id);
-        }
-    }
-};
-
-module.exports = bookResolvers;
+      addBook: (parent, { title, author, description }) => {
+        const newBook = {
+          id: String(books.length + 1),
+          title,
+          author,
+          description,
+        };
+        books.push(newBook);
+        return newBook;
+      },
+    },
+  };
+  
+  module.exports = resolvers;
+  
 
