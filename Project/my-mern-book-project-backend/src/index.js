@@ -1,4 +1,3 @@
-// src/index.js
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -27,6 +26,12 @@ const schema = makeExecutableSchema({
   resolvers: [bookResolvers, userResolvers]
 });
 
+// Log incoming requests
+app.use((req, res, next) => {
+  console.log(`Received request: ${req.method} ${req.url}`);
+  next();
+});
+
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   graphiql: true
@@ -35,6 +40,4 @@ app.use('/graphql', graphqlHTTP({
 app.listen(4000, () => {
   console.log('Server is running on port 4000');
 });
-
-
 
