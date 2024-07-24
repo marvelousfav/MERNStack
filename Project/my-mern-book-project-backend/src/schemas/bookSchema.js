@@ -1,11 +1,14 @@
-const { gql } = require('apollo-server');
+//bookSchema.js
 
-const typeDefs = gql`
+const { gql } = require('apollo-server-express');
+
+const bookSchema = gql`
   type Book {
     id: ID!
     title: String!
     author: String!
-    description: String!  // Add this line
+     description: String!
+    publishedDate: String
   }
 
   type Query {
@@ -14,10 +17,10 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addBook(title: String!, author: String!, description: String!): Book
+    addBook(title: String!, author: String!, publishedDate: String): Book
+    deleteBook(id: ID!): Book
   }
 `;
 
-module.exports = typeDefs;
-
+module.exports = bookSchema;
 
