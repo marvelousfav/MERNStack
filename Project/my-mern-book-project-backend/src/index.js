@@ -1,6 +1,5 @@
+// src/index.js
 require('dotenv').config();
-console.log('MONGODB_URI:', process.env.MONGODB_URI); // Log the MongoDB URI to verify it's being loaded
-
 const express = require('express');
 const mongoose = require('mongoose');
 const { graphqlHTTP } = require('express-graphql');
@@ -36,5 +35,6 @@ app.use('/graphql', graphqlHTTP({
 app.listen(4000, () => {
   console.log('Server is running on port 4000');
 });
+
 
 
