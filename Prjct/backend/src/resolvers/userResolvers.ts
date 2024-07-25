@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/User'; // Adjust the path as necessary
+import  User from '../models/User'; // Adjust the path as necessary
 import { JWT_SECRET } from '../utils/auth';
 
 
@@ -31,7 +31,7 @@ const userResolvers = {
           });
   
           const result = await user.save();
-          return { ...result._doc, password: null, id: result._id };
+          return { ...result. _doc, password: null, id: result._id };
         } catch (err) {
           throw err;
         }
